@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avaliação de Proposta de Intervenção</title>
+    <style>
+        .question {
+            margin: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .button {
+            margin: 5px;
+            padding: 10px;
+        }
+        #resultado {
+            display: none;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="inicio" class="question">
+        <p>O texto possui proposta de intervenção?</p>
+        <button class="button" onclick="responder('inicio', 'sim', 'direitos_humanos')">SIM</button>
+        <button class="button" onclick="mostrarResultado(0, 'O texto não apresenta proposta de intervenção.')">NÃO</button>
+    </div>
+
+    <div id="direitos_humanos" class="question hidden">
+        <p>A proposta de intervenção desrespeita os direitos humanos?</p>
+        <button class="button" onclick="mostrarResultado(0, 'A proposta desrespeita os direitos humanos.')">SIM</button>
+        <button class="button" onclick="responder('direitos_humanos', 'nao', 'relacionada_tema')">NÃO</button>
+    </div>
+
+    <div id="relacionada_tema" class="question hidden">
+        <p>A proposta está relacionada ao tema?</p>
+        <button class="button" onclick="responder('relacionada_tema', 'sim', 'elementos_validos')">SIM</button>
+        <button class="button" onclick="responder('relacionada_tema', 'nao', 'relacionada_assunto')">NÃO</button>
+    </div>
+
+    <div id="relacionada_assunto" class="question hidden">
+        <p>E ao assunto?</p>
+        <button class="button" onclick="mostrarResultado(40, 'A proposta está relacionada apenas ao assunto.')">SIM</button>
+        <button class="button" onclick="mostrarResultado(0, 'A proposta não está relacionada nem ao tema nem ao assunto.')">NÃO</button>
+    </div>
+
+    <div id="elementos_validos" class="question hidden">
+        <p>A proposta tem mais de 1 elemento válido?</p>
+        <button class="button" onclick="mostrarResultado(40, 'A proposta possui apenas um elemento válido.')">NÃO</button>
+        <button class="button" onclick="responder('elementos_validos', 'sim', 'condicional')">SIM</button>
+    </div>
+
+    <div id="condicional" class="question hidden">
+        <p>A proposta está escrita na condicional?</p>
+        <button class="button" onclick="mostrarResultado(80, 'A proposta está escrita na forma condicional.')">SIM</button>
+        <button class="button" onclick="responder('condicional', 'nao', 'quantidade_elementos')">NÃO</button>
+    </div>
+
+    <div id="quantidade_elementos" class="question hidden">
+        <p>Quantos elementos válidos a proposta tem?</p>
+        <button class="button" onclick="mostrarResultado(80, 'A proposta possui 2 elementos válidos.')">2</button>
+        <button class="button" onclick="mostrarResultado(120, 'A proposta possui 3 elementos válidos.')">3</button>
+        <button class="button" onclick="mostrarResultado(160, 'A proposta possui 4 elementos válidos.')">4</button>
+        <button class="button" onclick="responder('quantidade_elementos', 'cinco', 'detalhamento')">5</button>
+    </div>
+
+    <div id="detalhamento" class="question hidden">
+        <p>O detalhamento válido é exatamente um dos seguintes:<br>
+           AGENTE, AÇÃO, MODO/MEIO: Explicação, Exemplificação, Justificativa<br>
+           FINALIDADE: desdobramento do efeito</p>
+        <button class="button" onclick="mostrarResultado(200, 'A proposta possui 5 elementos válidos com detalhamento adequado.')">SIM</button>
+        <button class="button" onclick="mostrarResultado(160, 'A proposta possui 5 elementos válidos mas sem detalhamento adequado.')">NÃO</button>
+    </div>
+
+    <div id="resultado">
+        <p>Resultado: <span id="valor_resultado"></span></p>
+        <p id="comentario"></p>
+        <button class="button" onclick="reiniciar()">Recomeçar</button>
+    </div>
+
+    <script>
+        function responder(atual, resposta, proximo) {
+            document.getElementById(atual).classList.add('hidden');
+            document.getElementById(proximo).classList.remove('hidden');
+        }
+
+        function mostrarResultado(valor, comentario) {
+            document.querySelectorAll('.question').forEach(el => el.classList.add('hidden'));
+            document.getElementById('resultado').style.display = 'block';
+            document.getElementById('valor_resultado').textContent = valor;
+            document.getElementById('comentario').textContent = comentario;
+        }
+
+        function reiniciar() {
+            document.querySelectorAll('.question').forEach(el => el.classList.add('hidden'));
+            document.getElementById('resultado').style.display = 'none';
+            document.getElementById('inicio').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
